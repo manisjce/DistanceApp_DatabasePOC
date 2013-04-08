@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        
+    </head>
+    <body>
+        <form>
+        <label>Username:</label>
+            <input type="text" name="username" />
+       <br />
+        <label>Password:</label>
+            <input type="password" name="password"  />
+       <br />
+       <br />
+            <input type="submit" value="Submit" name="submit" class="submit" onclick=newuserCB(username,password) />
+          
+</form> 
+        <script>
+            function newuserCB(username,password) {
+        var db2 = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            
+           db2.transaction( function(tx){ queryDB3(tx,username,password) }, errorCB);
+            
+    }
+            function queryDB3(tx,username,password) {
+            console.log("hi");
+       tx.executeSql('INSERT INTO DEMO (id, data) VALUES ("'+username.value+'", "'+password.value+'")', [], querySuccess, errorCB);
+            window.location.replace("test.html");
+        
+    }
+            function querySuccess(tx, results) {
+            
+    }
+            
+            function errorCB(err) {
+        console.log("Error processing SQL: "+err.code);
+    }
+            
+        </script>
+    </body>
+</html>

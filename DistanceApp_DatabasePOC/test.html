@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <meta charset="utf-8" />
+		<script src="cordova.js"></script>
+    </head>
+    <body onload="approvedusers()">
+        <h1>The Approved Users are :</h1>
+      <br />
+       <div id="userload"> </div>
+           <br /><br />     
+        To Add Users please click below,
+        <div id="adduser">
+  ADD USER
+</div><br /><br /><br /><br />
+        To Logout please click below,
+        <div id="logout">
+       LOGOUT
+  
+</div>
+
+        <script>
+       $('#adduser').click(function() {
+  
+           window.location.replace("add.html");
+}); 
+            </script>
+      
+        <script>
+            
+        $('#logout').click(function() {
+  
+           window.location.replace("index.html");
+});     
+            
+        
+    </script>    
+        
+        
+        
+        
+       <script>
+            function approvedusers()
+            {
+            console.log("second page");
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+        db.transaction(queryDB, errorCB);
+                }
+             function queryDB(tx) {
+                
+        tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+        
+    }
+            function querySuccess(tx, results) {
+        console.log("Returned rows = " + results.rows.length);
+        var temp="";
+        for(i=0; i<results.rows.length;i++)
+        {
+        temp+=results.rows.item(i).id;
+            temp+="<br\>";
+        
+            }
+            //document.getElementById("load").innerHTML=temp;
+                $('#userload').html(temp);
+        
+    }
+            function errorCB(err) {
+        console.log("Error processing SQL: "+err.code);
+    }
+        </script>
+    </body>
+</html>
